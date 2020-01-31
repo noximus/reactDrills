@@ -3,19 +3,26 @@ import Title from "./atoms/Title.js";
 import SubmitBtn from "./atoms/SubmitBtn.js";
 
 function SignUp() {
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [agree, setAgree] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    agree: false
+  });
   const [submitBtn, setSubmitBtn] = useState("next");
   const [currentStep, setCurrentStep] = useState(1);
 
-  function handleCurrentStep(step) {
-    step === 2 ? setCurrentStep(2) : setCurrentStep(1);
-  }
+  const updateFields = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  function submitForm() {
-    console.log(email, firstName, lastName, agree);
+  function handleCurrentStep(step) {
+    if (step === 2) {
+      setCurrentStep(2);
+      setSubmitBtn("submit");
+    } else {
+      setCurrentStep(1);
+    }
   }
 
   const handleSubmit = e => {
@@ -23,6 +30,10 @@ function SignUp() {
     console.log("next button hit");
     currentStep === 1 ? handleCurrentStep(2) : submitForm();
   };
+
+  function submitForm() {
+    console.log(form.email, form.firstName, form.lastName, form.agree);
+  }
 
   return (
     <div className="container">
@@ -37,9 +48,10 @@ function SignUp() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     placeholder="enter email address"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    value={form.email}
+                    onChange={updateFields}
                     required
                   />
                 </div>
@@ -50,9 +62,10 @@ function SignUp() {
                     <input
                       type="text"
                       id="firstName"
+                      name="firstName"
                       placeholder="First Name"
-                      value={firstName}
-                      onChange={e => setFirstName(e.target.value)}
+                      value={form.firstName}
+                      onChange={updateFields}
                       required
                     />
                   </div>
@@ -60,9 +73,10 @@ function SignUp() {
                     <input
                       type="text"
                       id="lastName"
+                      name="lastName"
                       placeholder="Last Name"
-                      value={lastName}
-                      onChange={e => setLastName(e.target.value)}
+                      value={form.lastName}
+                      onChange={updateFields}
                       required
                     />
                   </div>
@@ -75,11 +89,11 @@ function SignUp() {
                 <div>
                   <input
                     id="gdpr"
-                    name="isGoing"
+                    name="agree"
                     type="checkbox"
                     required
-                    checked={agree}
-                    onChange={e => setAgree(e.target.checked)}
+                    checked={form.agree}
+                    onChange={updateFields}
                   />
                 </div>
                 <div>
