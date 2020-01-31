@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Title from "./atoms/Title.js";
-import SubTitle from "./atoms/SubTitle.js";
 import SubmitBtn from "./atoms/SubmitBtn.js";
+import Btn from "./atoms/Btn.js";
 
 function SignUp() {
-  // handleChange = (e) => {
-  //   this.props.dispatch({ type: "SAVE_EMAIL" , email: e.target.value })
-  //   // console.log(e.target.value)
-  // }
+  const [ email, setEmail ] = useState("");
   return (
     <div className="container">
       <div className="row">
@@ -20,13 +17,14 @@ function SignUp() {
                 <input
                   type="email"
                   id="email"
-                  placeholder={"this.props.emailText"}
-                  value={"this.props.email"}
-                  onChange={"this.handleChange"}
+                  placeholder="enter email address"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   required="1"
                 />
               </div>
               <SubmitBtn text="Next" />
+              <Btn text="next" />
             </div>
             <div className="gdpr">
               <div>
