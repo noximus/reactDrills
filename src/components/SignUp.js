@@ -29,12 +29,11 @@ function SignUp() {
   function handleCurrentStep(step) {
     if (step === 2) {
       setCurrentStep(2);
-      setSubmitBtn("submit");
-      setTitle("Almost Done! Please Enter Your First and Last Name.");
+      setSubmitBtn("sign up");
       setSubTitle("Almost Done! Please Enter Your First and Last Name.");
     } else if (step === 3) {
       setCurrentStep(3);
-      setTitle("congradulations!");
+      setTitle("congratulations!");
       setSubTitle("Thank You For Signing Up!");
     }
   }
@@ -78,7 +77,12 @@ function SignUp() {
                   </div>
                 </div>
               )}
-              <SubmitBtn text={submitBtn} />
+              {currentStep === 3 && (
+                <div className="bodyCopy">
+                  <p>Look out for the latest news on your favorite shows.</p>
+                </div>
+              )}
+              {currentStep !== 3 && <SubmitBtn text={submitBtn} />}
             </div>
             {currentStep === 1 && (
               <div className="gdpr">
