@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Title from "./atoms/Title.js";
 import SubmitBtn from "./atoms/SubmitBtn.js";
 
@@ -9,32 +9,34 @@ function SignUp() {
     lastName: "",
     agree: false
   });
-  // const [content, setContent] = useState ({
-  //   title: "join the list",
-  //   subTitle: "sign up for the tlc newsletter.",
-  //   title: "",
-  // })
-  const [title, setTitle] = useState("join the list");
-  const [subTitle, setSubTitle] = useState("SIGN UP FOR THE TLC NEWSLETTER.");
-  const [submitBtn, setSubmitBtn] = useState("next");
+  const [content, setContent] = useState({
+    mainTitle: "join the list",
+    subTitle: "sign up for the tlc newsletter.",
+    submitBtn: "next"
+  });
   const [currentStep, setCurrentStep] = useState(1);
 
   const updateFields = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  // const updateContent = e => {
-  //   setContent({ ...content, })
-  // }
+
+  function updateContent(contentItem, update) {
+    setContent({ ...content, [contentItem]: update });
+  }
+
+  // useEffect(()=>{
+
+  // })
 
   function handleCurrentStep(step) {
     if (step === 2) {
       setCurrentStep(2);
-      setSubmitBtn("sign up");
-      setSubTitle("Almost Done! Please Enter Your First and Last Name.");
+      updateContent("subTitle", "Almost Done! Please Enter Your First and Last Name.");
+      updateContent("submitBtn", "sign up");
     } else if (step === 3) {
       setCurrentStep(3);
-      setTitle("congratulations!");
-      setSubTitle("Thank You For Signing Up!");
+      updateContent("mainTitle", "congratulations!");
+      updateContent("subTitle", "Thank You For Signing Up!");
     }
   }
 
@@ -58,13 +60,13 @@ function SignUp() {
     <div className="container">
       <div className="row">
         <form onSubmit={handleSubmit}>
-          <Title text={title} type="title" />
+          <Title text={content.mainTitle} type="title" />
           <div className="tab-des">
-            <Title text={subTitle} type="subTitle" />
+            <Title text={content.subTitle} type="subTitle" />
             <div className="form-group">
               {currentStep === 1 && (
                 <div className="email">
-                  <input type="email" id="email" name="email" placeholder="enter email address" value={form.email} onChange={updateFields} required />
+                  <input type="email" id="email" name="email" placeholder="enter email address" value={form.email} onChange={updateFields} />
                 </div>
               )}
               {currentStep === 2 && (
@@ -82,12 +84,12 @@ function SignUp() {
                   <p>Look out for the latest news on your favorite shows.</p>
                 </div>
               )}
-              {currentStep !== 3 && <SubmitBtn text={submitBtn} />}
+              {currentStep !== 3 && <SubmitBtn text={content.submitBtn} />}
             </div>
             {currentStep === 1 && (
               <div className="gdpr">
                 <div>
-                  <input id="gdpr" name="agree" type="checkbox" required checked={form.agree} onChange={updateFields} />
+                  <input id="gdpr" name="agree" type="checkbox" checked={form.agree} onChange={updateFields} />
                 </div>
                 <div>
                   <label htmlFor="gdpr">
