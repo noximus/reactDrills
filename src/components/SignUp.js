@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Title from './atoms/Title.js';
 import SubmitBtn from './atoms/SubmitBtn.js';
 
@@ -20,26 +20,25 @@ function SignUp() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const updateContent = (contentItem, update) => {
-    setContent({ ...content, [contentItem]: update });
-    console.log('update content', contentItem, update);
-  };
-
   function handleCurrentStep(step) {
     if (step === 2) {
+      setContent({
+        ...content,
+        mainTitle: 'join the list',
+        subTitle: 'Almost Done! Please Enter Your First and Last Name.',
+        submitBtn: 'sign up'
+      });
       setCurrentStep(2);
-      console.log('handle current step', currentStep);
-      updateContent('subTitle', 'Almost Done! Please Enter Your First and Last Name.');
-      updateContent('submitBtn', 'sign up');
     } else if (step === 3) {
+      setContent({
+        ...content,
+        mainTitle: 'congratulations!',
+        subTitle: 'Thank You For Signing Up!',
+        submitBtn: 'sign up'
+      });
       setCurrentStep(3);
-      updateContent('mainTitle', 'congratulations!');
-      updateContent('subTitle', 'Thank You For Signing Up!');
     }
   }
-  // useEffect(() => {
-  //   console.log('use effectre-render');
-  // });
 
   const handleSubmit = e => {
     e.preventDefault();
